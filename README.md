@@ -1,3 +1,3 @@
-# auto-add-youtube-stream-to-watch-next-playlist
+# save-youtube-stream
 
 Auto-add live video to my Watch Next Playlist
