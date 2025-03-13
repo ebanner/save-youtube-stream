@@ -10,6 +10,8 @@ import json
 
 import boto3
 
+CHANNEL_ID = os.environ['CHANNEL_ID']
+WATCH_NEXT_PLAYLIST_ID = os.environ['WATCH_NEXT_PLAYLIST_ID']
 
 secrets_client = boto3.client("secretsmanager")
 
@@ -33,8 +35,6 @@ youtube = googleapiclient.discovery.build('youtube', 'v3', credentials=credentia
 
 
 def get_live_video_id():
-    CHANNEL_ID = os.environ['CHANNEL_ID']
-
     request = youtube.search().list(
         part="snippet",
         channelId=CHANNEL_ID,
@@ -52,8 +52,6 @@ def get_live_video_id():
 
 
 def add_to_watch_next_playlist(live_video_id):
-    WATCH_NEXT_PLAYLIST_ID = os.environ['WATCH_NEXT_PLAYLIST_ID']
-
     request = youtube.playlistItems().insert(
         part="snippet",
         body={
