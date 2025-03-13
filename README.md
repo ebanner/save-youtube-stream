@@ -1,3 +1,3 @@
 # save-youtube-stream
 
-Auto-add a live stream to my Watch Next playlist
+Auto-add a live stream from a YouTube channel to my Watch Next playlist
