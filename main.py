@@ -59,8 +59,8 @@ def add_to_watch_next_playlist(live_video_id):
                 "playlistId": WATCH_NEXT_PLAYLIST_ID,
                 "position": 0,
                 "resourceId": {
-                "kind": "youtube#video",
-                "videoId": live_video_id
+                    "kind": "youtube#video",
+                    "videoId": live_video_id
                 }   
             }   
         }
