@@ -46,6 +46,22 @@ def get_live_video_id():
     return live_video_id
 
 
+def get_watch_next_video_ids():
+    request = youtube.playlistItems().list(
+        part="contentDetails",
+        playlistId=WATCH_NEXT_PLAYLIST_ID,
+        maxResults=50
+    )
+    response = request.execute()
+
+    video_ids = []
+    for playlist_item in response['items']:
+        video_id = playlist_item['contentDetails']['videoId']
+        video_ids.append(video_id)
+
+    return set(video_ids)
+
+
 def add_to_watch_next_playlist(live_video_id):
     request = youtube.playlistItems().insert(
         part="snippet",
@@ -68,10 +84,17 @@ def add_to_watch_next_playlist(live_video_id):
 
 def lambda_handler(event, context):
     live_video_id = get_live_video_id()
+    watch_next_video_ids = get_watch_next_video_ids()
     if live_video_id == None:
         return {
             'statusCode': 200,
             'body': 'No live stream happening.'
+        }
+
+    if live_video_id in watch_next_video_ids:
+        return {
+            'statusCode': 200,
+            'body': 'Already added live stream to Watch Next playlist.'
         }
 
     add_to_watch_next_playlist(live_video_id)
