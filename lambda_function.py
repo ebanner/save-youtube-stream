@@ -1,15 +1,9 @@
+import json
 import os
 
-import googleapiclient.discovery
-from dotenv import load_dotenv
-from google.oauth2.credentials import Credentials
-
-load_dotenv()
-
-import json
-
 import boto3
-
+import googleapiclient.discovery
+from google.oauth2.credentials import Credentials
 
 secrets_client = boto3.client("secretsmanager")
 
@@ -73,10 +67,19 @@ def add_to_watch_next_playlist(live_video_id):
     return response
 
 
-if __name__ == '__main__':
+def lambda_handler(event, context):
     live_video_id = get_live_video_id()
     if live_video_id == None:
-        exit(0)
+        return {
+            'statusCode': 200,
+            'body': 'No live stream happening.'
+        }
 
     add_to_watch_next_playlist(live_video_id)
+
+    return {
+        'statusCode': 200,
+        'body': 'Added live stream to Watch Next playlist!'
+    }
+
 
